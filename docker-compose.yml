@@ -20,11 +20,16 @@ config:
     image: progrium/busybox
     volumes:
         - /config
+log:
+    image: progrium/busybox
+    volumes:
+        - /log
 hub:
     image: progrium/busybox
     volumes_from:
         - data
         - config
+        - log
 chadosqitch:
     image: dictybase/chadosqitch:1.23
     volumes_from:
@@ -37,4 +42,11 @@ datamanager:
         - hub
     environment:
         - API_KEY=92f0dc96-86ce-4098-ada5-695356448ca6
-        - ONTOLOGY=ECO,SO,OBOREL,GO,CL
+        - ONTOLOGY=ECO,OBOREL
+    command: go run runner.go
+modwareimport:
+    image: dictybase/modware-import:devel
+    volumes_from:
+        - hub
+    links:
+        - chadodb:dictychado
