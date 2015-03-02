@@ -232,7 +232,7 @@ func LiteratureAction(c *cli.Context) {
 	go RunLiteratureExportCmd(nconf, "dictynonpub2bib", wg)
 	go RunLiteratureExportCmd(aconf, "dictypubannotation", wg)
 	wg.Wait()
-	RunLiteratureUpdateCmd(dconf, "chadopub2bib")
+	RunLiteratureUpdateCmd(dconf, "dictybib")
 }
 
 func GeneAnnoAction(c *cli.Context) {
@@ -312,7 +312,7 @@ func RunLiteratureExportCmd(opt map[string]string, subcmd string, wg *sync.WaitG
 		p = append(p, fmt.Sprint("--", k), v)
 	}
 	cmdline := strings.Join(p, " ")
-	fmt.Printf("going to run %s\n", cmdline)
+	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-export", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
@@ -328,7 +328,7 @@ func RunLiteratureUpdateCmd(opt map[string]string, subcmd string) {
 		p = append(p, fmt.Sprint("--", k), v)
 	}
 	cmdline := strings.Join(p, " ")
-	fmt.Printf("going to run %s\n", cmdline)
+	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-update", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
@@ -352,7 +352,7 @@ func RunTransformCmd(opt map[string]string, subcmd string, file string, wg *sync
 		p = append(p, fmt.Sprint("--", k), v)
 	}
 	cmdline := strings.Join(p, " ")
-	fmt.Printf("going to run %s\n", cmdline)
+	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-transform", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
@@ -369,7 +369,7 @@ func RunDumpCmd(opt map[string]string, subcmd string, errChan chan<- error, out 
 		p = append(p, fmt.Sprint("--", k), v)
 	}
 	cmdline := strings.Join(p, " ")
-	fmt.Printf("going to run %s\n", cmdline)
+	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-dump", p...).CombinedOutput()
 	if err != nil {
 		errChan <- fmt.Errorf("Status %s message %s\n", err.Error(), string(b))
