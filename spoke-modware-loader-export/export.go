@@ -207,17 +207,17 @@ func main() {
 				cli.StringFlag{
 					Name:  "output-folder, of",
 					Usage: "Output folder",
-					Value: "/data/gff3",
+					Value: "/data/literature",
 				},
 				cli.StringFlag{
 					Name:  "log-folder, lf",
 					Usage: "Log folder",
-					Value: "/log/gff3",
+					Value: "/log/literature",
 				},
 				cli.StringFlag{
 					Name:  "config-folder, cf",
 					Usage: "Folder for config files",
-					Value: "/config/gff3",
+					Value: "/config/literature",
 				},
 				cli.StringFlag{
 					Name:   "dsn",

@@ -204,10 +204,13 @@ func LiteratureAction(c *cli.Context) {
 	}
 	pconf := map[string]string{
 		"config": MakeLiteatureConfig(c, "chadopub2bib"),
+		"email":  c.String("email"),
+		"output": filepath.Join(c.String("output-folder"), "dictytemp.bib"),
 	}
 	dconf := map[string]string{
 		"conf":   MakeLiteatureConfig(c, "dictybib"),
 		"output": filepath.Join(c.String("output-folder"), "dictybib.bib"),
+		"input":  filepath.Join(c.String("output-folder"), "dictytemp.bib"),
 	}
 	gconf := map[string]string{
 		"config": MakePub2BibConfig(c, "dictygenomespub"),
@@ -224,11 +227,12 @@ func LiteratureAction(c *cli.Context) {
 
 	wg := new(sync.WaitGroup)
 	wg.Add(4)
-	go RunLiteraturePipeCmd(pconf, dconf, "modware-export", "modware-update", wg)
+	go RunLiteratureExportCmd(pconf, "chadopub2bib", wg)
 	go RunTransformCmd(gconf, "pub2bib", gconf["input"], wg)
 	go RunLiteratureExportCmd(nconf, "dictynonpub2bib", wg)
 	go RunLiteratureExportCmd(aconf, "dictypubannotation", wg)
 	wg.Wait()
+	RunLiteratureUpdateCmd(dconf, "chadopub2bib")
 }
 
 func GeneAnnoAction(c *cli.Context) {
@@ -315,6 +319,20 @@ func RunLiteratureExportCmd(opt map[string]string, subcmd string, wg *sync.WaitG
 	}
 }
 
+func RunLiteratureUpdateCmd(opt map[string]string, subcmd string) {
+	p := make([]string, 0)
+	p = append(p, subcmd)
+	for k, v := range opt {
+		p = append(p, fmt.Sprint("--", k), v)
+	}
+	cmdline := strings.Join(p, " ")
+	fmt.Printf("going to run %s\n", cmdline)
+	b, err := exec.Command("modware-update", p...).CombinedOutput()
+	if err != nil {
+		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
+	}
+}
+
 func RunTransformCmd(opt map[string]string, subcmd string, file string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	// Write list of pubmed ids to the input file
@@ -362,14 +380,14 @@ func RunLiteraturePipeCmd(fopt map[string]string, sopt map[string]string, fscmd 
 	fcmdline := strings.Join(fp, " ")
 
 	sp := make([]string, 0)
-	sp = append(sp, fscmd)
+	sp = append(sp, scmd)
 	for k, v := range sopt {
 		sp = append(sp, fmt.Sprint("--", k), v)
 	}
 	scmdline := strings.Join(sp, " ")
 
-	fc := exec.Command(fscmd, fcmdline)
-	sc := exec.Command(scmd, scmdline)
+	fc := exec.Command("modware-export", fp...)
+	sc := exec.Command("modware-update", sp...)
 
 	// http://golang.org/pkg/io/#Pipe
 	reader, writer := io.Pipe()
@@ -386,12 +404,12 @@ func RunLiteraturePipeCmd(fopt map[string]string, sopt map[string]string, fscmd 
 	sc.Stderr = &sb
 
 	// start and wait for the commands
-	fmt.Printf("Starting command %s\n", fcmdline)
+	fmt.Printf("Going to run command %s\n", fcmdline)
 	if err := fc.Start(); err != nil {
 		fmt.Printf("Error starting first command: %s\n", fb.String())
 		return
 	}
-	fmt.Printf("Starting command %s\n", scmdline)
+	fmt.Printf("Going to command %s\n", scmdline)
 	if err := sc.Start(); err != nil {
 		fmt.Printf("Error starting second command: %s\n", sb.String())
 		return
