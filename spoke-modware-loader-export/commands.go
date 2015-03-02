@@ -316,6 +316,8 @@ func RunLiteratureExportCmd(opt map[string]string, subcmd string, wg *sync.WaitG
 	b, err := exec.Command("modware-export", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
+	} else {
+		log.Printf("finished running %s\n", cmdline)
 	}
 }
 
@@ -330,7 +332,10 @@ func RunLiteratureUpdateCmd(opt map[string]string, subcmd string) {
 	b, err := exec.Command("modware-update", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
+	} else {
+		log.Printf("finished running %s\n", cmdline)
 	}
+
 }
 
 func RunTransformCmd(opt map[string]string, subcmd string, file string, wg *sync.WaitGroup) {
@@ -351,7 +356,10 @@ func RunTransformCmd(opt map[string]string, subcmd string, file string, wg *sync
 	b, err := exec.Command("modware-transform", p...).CombinedOutput()
 	if err != nil {
 		fmt.Printf("Status %s message %s\n", err.Error(), string(b))
+	} else {
+		log.Printf("finished running %s\n", cmdline)
 	}
+
 }
 
 func RunDumpCmd(opt map[string]string, subcmd string, errChan chan<- error, out chan<- []byte) {
