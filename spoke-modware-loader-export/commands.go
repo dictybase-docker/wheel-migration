@@ -123,7 +123,7 @@ func ExtraGFF3Action(c *cli.Context) {
 	}
 
 	count := 1
-	curr := time.Now()
+	//curr := time.Now()
 	for {
 		select {
 		case r := <-out:
@@ -140,8 +140,8 @@ func ExtraGFF3Action(c *cli.Context) {
 			}
 		default:
 			time.Sleep(100 * time.Millisecond)
-			elapsed := time.Since(curr)
-			fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
+			//elapsed := time.Since(curr)
+			//fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
 		}
 	}
 }
@@ -167,7 +167,7 @@ func StockCenterAction(c *cli.Context) {
 	}
 
 	count := 1
-	curr := time.Now()
+	//curr := time.Now()
 	for {
 		select {
 		case r := <-out:
@@ -184,8 +184,8 @@ func StockCenterAction(c *cli.Context) {
 			}
 		default:
 			time.Sleep(100 * time.Millisecond)
-			elapsed := time.Since(curr)
-			fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
+			//elapsed := time.Since(curr)
+			//fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
 		}
 	}
 }
@@ -265,7 +265,7 @@ func GeneAnnoAction(c *cli.Context) {
 	go RunExportCmd(conf2, "colleague2gene", errChan, out)
 
 	count := 1
-	curr := time.Now()
+	//curr := time.Now()
 	for {
 		select {
 		case r := <-out:
@@ -282,8 +282,8 @@ func GeneAnnoAction(c *cli.Context) {
 			}
 		default:
 			time.Sleep(100 * time.Millisecond)
-			elapsed := time.Since(curr)
-			fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
+			//elapsed := time.Since(curr)
+			//fmt.Printf("\r%d:%d:%d\t", int(elapsed.Hours()), int(elapsed.Minutes()), int(elapsed.Seconds()))
 		}
 	}
 }
