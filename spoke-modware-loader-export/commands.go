@@ -73,15 +73,15 @@ func CanonicalGFF3Action(c *cli.Context) {
 	for {
 		select {
 		case r := <-out:
-			fmt.Printf("\nfinished the %s\n succesfully", string(r))
+			log.Printf("\nfinished the %s\n succesfully", string(r))
 			count++
-			if count > 3 {
+			if count > 6 {
 				return
 			}
 		case err := <-errChan:
-			fmt.Printf("\nError %s in running command\n", err)
+			log.Printf("\nError %s in running command\n", err)
 			count++
-			if count > 3 {
+			if count > 6 {
 				return
 			}
 		default:
@@ -127,13 +127,13 @@ func ExtraGFF3Action(c *cli.Context) {
 	for {
 		select {
 		case r := <-out:
-			fmt.Printf("\nfinished the %s\n succesfully", string(r))
+			log.Printf("\nfinished the %s\n succesfully", string(r))
 			count++
 			if count > 7 {
 				return
 			}
 		case err := <-errChan:
-			fmt.Printf("\nError %s in running command\n", err)
+			log.Printf("\nError %s in running command\n", err)
 			count++
 			if count > 7 {
 				return
@@ -171,13 +171,13 @@ func StockCenterAction(c *cli.Context) {
 	for {
 		select {
 		case r := <-out:
-			fmt.Printf("\nfinished the %s\n succesfully", string(r))
+			log.Printf("\nfinished the %s\n succesfully", string(r))
 			count++
 			if count > 2 {
 				return
 			}
 		case err := <-errChan:
-			fmt.Printf("\nError %s in running command\n", err)
+			log.Printf("\nError %s in running command\n", err)
 			count++
 			if count > 2 {
 				return
@@ -295,7 +295,7 @@ func RunExportCmd(opt map[string]string, subcmd string, errChan chan<- error, ou
 		p = append(p, fmt.Sprint("--", k), v)
 	}
 	cmdline := strings.Join(p, " ")
-	fmt.Printf("going to run %s\n", cmdline)
+	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-export", p...).CombinedOutput()
 	if err != nil {
 		errChan <- fmt.Errorf("Status %s message %s\n", err.Error(), string(b))
