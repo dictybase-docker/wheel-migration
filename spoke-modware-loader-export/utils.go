@@ -48,7 +48,7 @@ func ValidateExtraArgs(c *cli.Context) bool {
 
 func CreateRequiredFolder(folder string) {
 	if _, err := os.Stat(folder); os.IsNotExist(err) {
-		if err := os.Mkdir(folder, 0744); err != nil {
+		if err := os.MkdirAll(folder, 0744); err != nil {
 			log.Fatal(err)
 		}
 	}

@@ -54,8 +54,18 @@ func CanonicalGFF3Action(c *cli.Context) {
 			"only_mitochondrial": "1",
 		},
 	}
+	var subf string
+	var name string
 	for k, v := range mopt {
-		conf := MakeCustomConfigFile(c, k)
+		if strings.Contains(k, "_") {
+			sn := strings.Split(k, "_")
+			subf = sn[0]
+			name = fmt.Sprintf("canonical_%s", sn[1])
+		} else {
+			subf = k
+			name = "canonical_core"
+		}
+		conf := MakeCustomConfigFile(c, name, subf)
 		CreateFolderFromYaml(conf)
 		opt := make(map[string]string)
 		for ik, iv := range v {
@@ -64,7 +74,8 @@ func CanonicalGFF3Action(c *cli.Context) {
 		opt["config"] = conf
 		go RunExportCmd(opt, "chado2canonicalgff3", errChan, out)
 	}
-	dc := MakeConfigFile(c, "discoideum")
+	dc := MakeDictyConfigFile(c, "canonical_core", "discoideum")
+	CreateFolderFromYaml(dc)
 	dopt := map[string]string{"config": dc}
 	go RunExportCmd(dopt, "chado2dictycanonicalgff3", errChan, out)
 
@@ -102,23 +113,23 @@ func ExtraGFF3Action(c *cli.Context) {
 	errChan := make(chan error)
 	out := make(chan []byte)
 	cmap := map[string]string{
-		"chado2dictynoncodinggff3":      "noncoding",
+		"chado2dictynoncodinggff3":      "canonical_noncoding",
 		"chado2dictynoncanonicalgff3":   "noncanonical_seq_center",
 		"chado2dictynoncanonicalv2gff3": "noncanonical_norepred",
-		"chado2dictycuratedgff3":        "curated",
+		"chado2dictycuratedgff3":        "noncanonical_curated",
 	}
 	for k, v := range cmap {
-		conf := map[string]string{"config": MakeConfigFile(c, v)}
+		conf := map[string]string{"config": MakeDictyConfigFile(c, v, "discoideum")}
 		CreateFolderFromYaml(conf["config"])
 		go RunExportCmd(conf, k, errChan, out)
 	}
 	ao := []map[string]string{
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "EST"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "cDNA_clone"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "databank_entry", "match_type": "nucleotide_match"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_EST"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_cDNA_clone"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_databank_entry", "match_type": "nucleotide_match"},
 	}
 	for _, m := range ao {
-		m["config"] = MakeConfigFile(c, m["feature_type"])
+		m["config"] = MakeDictyConfigFile(c, m["feature_type"], "discoideum")
 		go RunExportCmd(m, "chado2alignmentgff3", errChan, out)
 	}
 

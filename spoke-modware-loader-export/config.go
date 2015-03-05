@@ -77,15 +77,15 @@ func MakePub2BibConfig(c *cli.Context, name string) string {
 	return CreateYamlFile(pconf, c, name)
 }
 
-func MakeCustomConfigFile(c *cli.Context, name string) string {
+func MakeCustomConfigFile(c *cli.Context, name string, subfolder string) string {
 	gconf := GFF3Config{
 		Dsn:         c.String("dsn"),
 		User:        c.String("muser"),
 		Password:    c.String("mpassword"),
-		Output:      filepath.Join(c.String("output-folder"), fmt.Sprint(name, ".gff3")),
+		Output:      filepath.Join(c.String("output-folder"), subfolder, fmt.Sprint(name, ".gff3")),
 		FeatureName: "1",
 		LogLevel:    "debug",
-		LogFile:     filepath.Join(c.String("log-folder"), fmt.Sprint(name, ".log")),
+		LogFile:     filepath.Join(c.String("log-folder"), subfolder, fmt.Sprint(name, ".log")),
 	}
 	return CreateYamlFile(gconf, c, name)
 }
@@ -111,6 +111,19 @@ func MakeLiteatureConfig(c *cli.Context, name string) string {
 		Password: c.String("password"),
 		LogFile:  filepath.Join(c.String("log-folder"), fmt.Sprint(name, ".log")),
 		LogLevel: "info",
+	}
+	return CreateYamlFile(gconf, c, name)
+}
+
+func MakeDictyConfigFile(c *cli.Context, name string, subfolder string) string {
+	gconf := GFF3Config{
+		Dsn:         c.String("dsn"),
+		User:        c.String("user"),
+		Password:    c.String("password"),
+		Output:      filepath.Join(c.String("output-folder"), subfolder, fmt.Sprint(name, ".gff3")),
+		FeatureName: "1",
+		LogFile:     filepath.Join(c.String("log-folder"), subfolder, fmt.Sprint(name, ".log")),
+		LogLevel:    "info",
 	}
 	return CreateYamlFile(gconf, c, name)
 }
