@@ -1,5 +1,5 @@
 chadodata:
-    image: progrium/busybox
+    image: busybox
     volumes:
         - /var/lib/postgresql/data
 chadodb:
@@ -13,19 +13,19 @@ chadodb:
         - CHADO_PASS=dicty2014
         - CHADO_DB=dictychado
 data:
-    image: progrium/busybox
+    image: busybox
     volumes: 
         - /data
 config:
-    image: progrium/busybox
+    image: busybox
     volumes:
         - /config
 log:
-    image: progrium/busybox
+    image: busybox
     volumes:
         - /log
 hub:
-    image: progrium/busybox
+    image: busybox
     volumes_from:
         - data
         - config
