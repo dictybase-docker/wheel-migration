@@ -1,4 +1,4 @@
-FROM dictybase/perl:5.20 
+FROM perl:5.20 
 MAINTAINER Siddhartha Basu<siddhartha-basu@northwestern.edu>
 
 COPY run.sh /usr/src/chadosqitch/
