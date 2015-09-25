@@ -3,7 +3,7 @@ chadodata:
     volumes:
         - /var/lib/postgresql/data
 chadodb:
-    image: dictybase/postgres-chado:9.3
+    build: spoke-postgresql/
     ports: 
         - "5432:5432"
     volumes_from:
@@ -31,13 +31,13 @@ hub:
         - config
         - log
 chadosqitch:
-    image: dictybase/chadosqitch:1.23
+    build: spoke-sqitch/
     volumes_from:
         - hub
     links:
         - chadodb:dictychado
 datamanager:
-    image: dictybase/data-manager
+    build: spoke-data-manager/
     volumes_from:
         - hub
     environment:
@@ -45,7 +45,7 @@ datamanager:
         - ONTOLOGY=ECO,OBOREL
     command: go run runner.go
 modwareimport:
-    image: dictybase/modware-import:devel
+    build: spoke-modware-loader-import/
     volumes_from:
         - hub
     links:
