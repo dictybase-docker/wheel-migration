@@ -2,12 +2,16 @@
 This is a source repository for [docker](http://docker.io) image to run
 [chado](http://gmod.org/wiki/Chado) database instance in postgresql container.
 It is based on the generic postgresql
-[image](https://hub.docker.com/r/dictybase/postgres/) image. In addition, this
-current image source provides the following features/properties
+[image](https://hub.docker.com/r/dictybase/postgres/) image. 
 
 ## Additional features/properties
+It is __important__ to remember that building or running the image will not
+instantiate a chado schema in the database.  Rather, link a separate docker
+container to load the required schema.
+
+
 ### Configuration files
-Adds bunch of fined grained database configurations that are available as
+Adds bunch of fined grained database configurations that are available in
 separate files. The following `conf` files are provided.
 
 ```
