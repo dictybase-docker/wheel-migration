@@ -1,4 +1,4 @@
-FROM postgres:9.3
+FROM dictybase/postgres:9.3
 MAINTAINER Siddhartha Basu<siddhartha-basu@northwestern.edu>
 
 RUN mkdir -p /docker-entrypoint-initdb.d && mkdir -p /config
