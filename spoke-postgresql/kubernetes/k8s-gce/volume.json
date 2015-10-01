@@ -6,7 +6,7 @@
             "ReadOnlyMany"
         ],
         "capacity": {
-            "storage": "50Gi"
+            "storage": "100Gi"
         },
         "gcePersistentDisk": {
             "pdName": "database-disk",
@@ -15,9 +15,10 @@
     },
     "apiVersion": "v1",
     "metadata": {
-        "name": "pv1",
+        "name": "pv-gce1",
         "labels": {
-            "storage": "database"
+            "storage": "database",
+            "type": "gce"
         }
     }
 }

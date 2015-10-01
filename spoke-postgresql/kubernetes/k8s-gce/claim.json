@@ -5,7 +5,8 @@
         "name": "postgres-claim1",
         "labels": {
             "storage": "postgres",
-            "data": "complete"
+            "data": "complete",
+            "type": "gce"
         }
     },
     "spec": {
