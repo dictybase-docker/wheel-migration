@@ -24,7 +24,7 @@
                 "containers": [
                     {
                         "name": "postgres",
-                        "image": "dictybase/postgres:9.3",
+                        "image": "dictybase/chado-postgres",
                         "volumeMounts": [
                             {
                                 "mountPath": "/var/lib/postgresql/data",
@@ -53,6 +53,18 @@
                             {
                                 "name": "ADMIN_DB",
                                 "value": "admindb"
+                            },
+                            {
+                                "name": "CHADO_USER",
+                                "value": "chado"
+                            },
+                            {
+                                "name": "CHADO_DB",
+                                "value": "dictychado"
+                            },
+                            {
+                                "name": "CHADO_PASS",
+                                "value": "chadopass"
                             }
                         ]
                     }
@@ -62,7 +74,7 @@
                         "name": "postgres-persistent-storage",
                         "gcePersistentDisk": {
                             "pdName": "database-disk",
-                            "fsType": "ext4"
+                            "fsType": "xfs4"
                         }
                     }
                 ]
