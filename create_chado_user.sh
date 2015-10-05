@@ -7,12 +7,12 @@ fi
 
 if [ -e "/secrets/chadodb" ]
 then
-    CHADO_USER=cat $(cat /etc/chadodb)
+    CHADO_DB=cat $(cat /etc/chadodb)
 fi
 
 if [ -e "/secrets/chadouser" ]
 then
-    CHADO_USER=cat $(cat /etc/chadouser)
+    CHADO_USER=cat $(cat /etc/chadopass)
 fi
 
 
