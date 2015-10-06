@@ -22,7 +22,7 @@
                 "containers": [
                     {
                         "name": "postgres",
-                        "image": "dictybase/postgres:9.3",
+                        "image": "dictybase/chado-postgres",
                         "volumeMounts": [
                             {
                                 "mountPath": "/var/lib/postgresql/data",
@@ -37,6 +37,10 @@
                         ],
                         "env": [
                             {
+                                "name": "PGDATA",
+                                "value": "/var/lib/postgresql/data/pgdata"
+                            },
+                            {
                                 "name": "ADMIN_USER",
                                 "value": "adminuser"
                             },
@@ -47,6 +51,18 @@
                             {
                                 "name": "ADMIN_DB",
                                 "value": "admindb"
+                            },
+                            {
+                                "name": "CHADO_USER",
+                                "value": "chado"
+                            },
+                            {
+                                "name": "CHADO_DB",
+                                "value": "dictychado"
+                            },
+                            {
+                                "name": "CHADO_PASS",
+                                "value": "chadopass"
                             }
                         ]
                     }
