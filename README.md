@@ -6,6 +6,9 @@ topology.
 ## Usage
 The migration task is run using [kubernetes](http://kubernetes.io). Kubernetes can be run both locally(dev version)
 and in [google compute engine](https://cloud.google.com/compute/). 
+For both the cases,
+[kubectl](http://kubernetes.io/v1.0/docs/user-guide/kubectl/kubectl.html)
+command line client need to be installed.
 
 ### Local
 
@@ -28,6 +31,51 @@ $_> cd spoke-postgresql/kubernetes/k8s-local
 $_> kubectl create -f volume.json; kubectl create -f claim.json
 ```
 
-The above with create a 25G of persistent volume and a claim of 20G. To change
-any of the default parameter change the configuration accordingly.
+The above with create a 25G of persistent volume and a 20G of persistent claim. To change
+any of the default parameter change the configurations accordingly.
 
+* Run the postgresql service and pod with replication controller. By default,
+  the database will be initialized with 20G of disk space(from 20G persistent
+  claim).
+
+```
+$_> kubectl create -f service.json; kubectl create -f pod.json
+```
+
+### Google compute engine
+* [Download](https://github.com/kubernetes/kubernetes/releases) latest kubernetes and untar it.
+* [Setup](http://kubernetes.io/v1.0/docs/getting-started-guides/gce.html) all
+  prerequisites for google compute engine to run the cluster.
+* Go to untar kubernetes folder and start the cluster.
+
+```
+$_> cd kubernetes
+$_> cluster/kube-up.sh
+```
+
+* Create a GCE disk named 'database-disk'.
+```
+$_> gcloud compute disks create --size 30GB database-disk.
+```
+
+The disk size cannot be below 25GB.
+
+* Create volume and claim.
+
+```
+$_> kubectl create -f volume.json; kubectl create -f claim.json
+```
+
+* To create secrets, copy the `example_secrets.json` to `secrets.json` (any
+  other name will also work) and fill up all the seven fields. All fields need to be
+  base64 encoded.
+
+```
+$_> kubectl create -f secrets.json
+```
+
+* Now start the postgresql database server service and pod.
+
+```
+$_> kubectl create -f service.json; kubectl create -f pod-pvc-secret.json
+```
