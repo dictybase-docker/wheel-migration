@@ -12,12 +12,10 @@ command line client need to be installed.
 
 ### Local
 
-* Install [docker compose](https://docs.docker.com/compose/).
-* Clone this repository and start up a single node kubernetes cluster.
+* Manage a local kubernetes cluster using [this](https://github.com/dictybase-docker/docker-compose-kubernetes) repository.
 
-```
-$_> docker-compose -f k8s-local.yml
-```
+* Clone this repository.
+
 * Go the kubernetes folder. 
 
 ```
