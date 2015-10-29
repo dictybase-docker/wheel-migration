@@ -256,7 +256,7 @@ func GeneAnnoAction(c *cli.Context) {
 	errChan := make(chan error)
 	out := make(chan []byte)
 	conf := make(map[string]string)
-	conf["config"] = MakeConfigFile(c, "genesummary")
+	conf["config"] = MakeGeneralConfigFile(c, "genesummary", "csv")
 	CreateFolderFromYaml(conf["config"])
 	for _, param := range []string{"legacy-user", "legacy-password", "legacy-dsn"} {
 		opt := ur.ReplaceAllString(param, "_")
@@ -266,7 +266,7 @@ func GeneAnnoAction(c *cli.Context) {
 
 	for _, param := range []string{"public", "private"} {
 		conf := make(map[string]string)
-		conf["config"] = MakeConfigFile(c, param)
+		conf["config"] = MakeGeneralConfigFile(c, param, "csv")
 		conf["note"] = param
 		go RunExportCmd(conf, "curatornotes", errChan, out)
 	}

@@ -26,6 +26,15 @@ type LiteratureConfig struct {
 	LogFile  string `yaml:"logfile"`
 }
 
+type GeneralConfig struct {
+	Dsn      string `yaml:"dsn"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	Output   string `yaml:"output"`
+	LogLevel string `yaml:"log_level"`
+	LogFile  string `yaml:"logfile"`
+}
+
 type GFF3Config struct {
 	Dsn         string `yaml:"dsn"`
 	User        string `yaml:"user"`
@@ -124,6 +133,18 @@ func MakeDictyConfigFile(c *cli.Context, name string, subfolder string) string {
 		FeatureName: "1",
 		LogFile:     filepath.Join(c.String("log-folder"), subfolder, fmt.Sprint(name, ".log")),
 		LogLevel:    "info",
+	}
+	return CreateYamlFile(gconf, c, name)
+}
+
+func MakeGeneralConfigFile(c *cli.Context, name string, ext string) string {
+	gconf := GeneralConfig{
+		Dsn:      c.String("dsn"),
+		User:     c.String("user"),
+		Password: c.String("password"),
+		Output:   filepath.Join(c.String("output-folder"), fmt.Sprint(name, ext)),
+		LogFile:  filepath.Join(c.String("log-folder"), fmt.Sprint(name, ".log")),
+		LogLevel: "info",
 	}
 	return CreateYamlFile(gconf, c, name)
 }
