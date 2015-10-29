@@ -1,25 +1,25 @@
-data:
+genomes_data:
     image: alpine
     volumes: 
         - /data
-config:
+genomes_config:
     image: alpine
     volumes:
         - /config
-log:
+genomes_log:
     image: alpine
     volumes:
         - /log
-hub:
+genomes_hub:
     image: alpine
     volumes_from:
-        - data
-        - config
-        - log
+        - genomes_data
+        - genomes_config
+        - genomes_log
 genomes:
     image: dictybase/modware-loader-export:devel
     volumes_from:
-        - hub
+        - genomes_hub
     environment:
         - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
         - ORACLE_USER=CGM_CHADO

@@ -1,25 +1,29 @@
-data:
+annotations_data:
     image: alpine
     volumes: 
         - /data
-config:
+    command: /bin/true
+annotations_config:
     image: alpine
     volumes:
         - /config
-log:
+    command: /bin/true
+annotations_log:
     image: alpine
     volumes:
         - /log
-hub:
+    command: /bin/true
+annotations_hub:
     image: alpine
     volumes_from:
-        - data
-        - config
-        - log
+        - annotations_data
+        - annotations_config
+        - annotations_log
+    command: /bin/true
 annotations:
     image: dictybase/modware-loader-export:devel
     volumes_from:
-        - hub
+        - annotations_hub
     environment:
         - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
         - ORACLE_USER=CGM_CHADO

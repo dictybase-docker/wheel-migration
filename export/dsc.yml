@@ -1,28 +1,32 @@
-data:
+dsc_data:
     image: alpine
     volumes: 
         - /data
-config:
+    command: /bin/true
+dsc_config:
     image: alpine
     volumes:
         - /config
-log:
+    command: /bin/true
+dsc_log:
     image: alpine
     volumes:
         - /log
-hub:
+    command: /bin/true
+dsc_hub:
     image: alpine
     volumes_from:
-        - data
-        - config
-        - log
-literature:
+        - dsc_data
+        - dsc_config
+        - dsc_log
+    command: /bin/true
+dsc:
     image: dictybase/modware-loader-export:devel
     volumes_from:
-        - hub
+        - dsc_hub
     environment:
         - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
         - ORACLE_USER=CGM_CHADO
         - ORACLE_PASS=CGM_CHADO
         - EUTILS_EMAIL=siddhartha-basu@northwestern.edu
-    command: app literature
+    command: app stockcenter
