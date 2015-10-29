@@ -1,17 +1,17 @@
 data:
-    image: progrium/busybox
+    image: alpine
     volumes: 
         - /data
 config:
-    image: progrium/busybox
+    image: alpine
     volumes:
         - /config
 log:
-    image: progrium/busybox
+    image: alpine
     volumes:
         - /log
 hub:
-    image: progrium/busybox
+    image: alpine
     volumes_from:
         - data
         - config
