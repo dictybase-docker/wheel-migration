@@ -1,0 +1,28 @@
+data:
+    image: progrium/busybox
+    volumes: 
+        - /data
+config:
+    image: progrium/busybox
+    volumes:
+        - /config
+log:
+    image: progrium/busybox
+    volumes:
+        - /log
+hub:
+    image: progrium/busybox
+    volumes_from:
+        - data
+        - config
+        - log
+literature:
+    image: dictybase/modware-loader-export:devel
+    volumes_from:
+        - hub
+    environment:
+        - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
+        - ORACLE_USER=CGM_CHADO
+        - ORACLE_PASS=CGM_CHADO
+        - EUTILS_EMAIL=siddhartha-basu@northwestern.edu
+    command: app literature
