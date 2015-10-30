@@ -272,7 +272,7 @@ func GeneAnnoAction(c *cli.Context) {
 	}
 
 	conf2 := make(map[string]string)
-	conf2["conf"] = MakeConfigFile(c, "coll2gene")
+	conf2["conf"] = MakeGeneralConfigFile(c, "coll2gene", "csv")
 	go RunExportCmd(conf2, "colleague2gene", errChan, out)
 
 	count := 1

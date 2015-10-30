@@ -142,7 +142,7 @@ func MakeGeneralConfigFile(c *cli.Context, name string, ext string) string {
 		Dsn:      c.String("dsn"),
 		User:     c.String("user"),
 		Password: c.String("password"),
-		Output:   filepath.Join(c.String("output-folder"), fmt.Sprint(name, ext)),
+		Output:   filepath.Join(c.String("output-folder"), fmt.Sprint(name, ".", ext)),
 		LogFile:  filepath.Join(c.String("log-folder"), fmt.Sprint(name, ".log")),
 		LogLevel: "info",
 	}
