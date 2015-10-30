@@ -1,19 +1,23 @@
 dsc_data:
+    container_name: dsc_data
     image: alpine
     volumes: 
         - /data
     command: /bin/true
 dsc_config:
+    container_name: dsc_config
     image: alpine
     volumes:
         - /config
     command: /bin/true
 dsc_log:
+    container_name: dsc_log
     image: alpine
     volumes:
         - /log
     command: /bin/true
 dsc_hub:
+    container_name: dsc_hub
     image: alpine
     volumes_from:
         - dsc_data
@@ -21,6 +25,7 @@ dsc_hub:
         - dsc_log
     command: /bin/true
 dsc:
+    container_name: dsc
     image: dictybase/modware-loader-export:devel
     volumes_from:
         - dsc_hub
