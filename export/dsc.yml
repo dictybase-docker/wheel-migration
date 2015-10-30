@@ -33,5 +33,8 @@ dsc:
         - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
         - ORACLE_USER=CGM_CHADO
         - ORACLE_PASS=CGM_CHADO
+        - LEGACY_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
+        - LEGACY_USER=CGM_DDB
+        - LEGACY_PASS=CGM_DDB
         - EUTILS_EMAIL=siddhartha-basu@northwestern.edu
     command: app stockcenter
