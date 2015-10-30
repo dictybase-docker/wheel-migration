@@ -1,19 +1,23 @@
 annotations_data:
+    container_name: annotations_data
     image: alpine
     volumes: 
         - /data
     command: /bin/true
 annotations_config:
+    container_name: annotations_config
     image: alpine
     volumes:
         - /config
     command: /bin/true
 annotations_log:
+    container_name: annotations_log
     image: alpine
     volumes:
         - /log
     command: /bin/true
 annotations_hub:
+    container_name: annotations_hub
     image: alpine
     volumes_from:
         - annotations_data
@@ -21,6 +25,7 @@ annotations_hub:
         - annotations_log
     command: /bin/true
 annotations:
+    container_name: annotations
     image: dictybase/modware-loader-export:devel
     volumes_from:
         - annotations_hub

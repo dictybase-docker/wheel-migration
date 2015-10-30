@@ -1,22 +1,27 @@
 genomes_data:
+    container_name: genomes_data
     image: alpine
     volumes: 
         - /data
 genomes_config:
+    container_name: genomes_config
     image: alpine
     volumes:
         - /config
 genomes_log:
+    container_name: genomes_log
     image: alpine
     volumes:
         - /log
 genomes_hub:
+    container_name: genomes_hub
     image: alpine
     volumes_from:
         - genomes_data
         - genomes_config
         - genomes_log
 genomes:
+    container_name: genomes
     image: dictybase/modware-loader-export:devel
     volumes_from:
         - genomes_hub
