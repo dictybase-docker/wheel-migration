@@ -309,7 +309,7 @@ func RunExportCmd(opt map[string]string, subcmd string, errChan chan<- error, ou
 	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-export", p...).CombinedOutput()
 	if err != nil {
-		errChan <- fmt.Errorf("Status %s message %s\n", err.Error(), string(b))
+		errChan <- fmt.Errorf("Status %s message %s for cmdline %s\n", err.Error(), string(b), cmdline)
 		return
 	}
 	out <- []byte(cmdline)
