@@ -60,10 +60,10 @@ func CanonicalGFF3Action(c *cli.Context) {
 		if strings.Contains(k, "_") {
 			sn := strings.Split(k, "_")
 			subf = sn[0]
-			name = fmt.Sprintf("canonical_%s", sn[1])
+			name = fmt.Sprintf("%s_canonical_%s", sn[0], sn[1])
 		} else {
 			subf = k
-			name = "canonical_core"
+			name = fmt.Sprintf("%s_canonical_core", k)
 		}
 		conf := MakeCustomConfigFile(c, name, subf)
 		CreateFolderFromYaml(conf)
