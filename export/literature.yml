@@ -22,7 +22,7 @@ literature_hub:
         - literature_log
 literature:
     container_name: literature
-    image: dictybase/modware-loader-export:devel
+    image: dictybase/modware-loader-export:1.6.2
     volumes_from:
         - literature_hub
     environment:

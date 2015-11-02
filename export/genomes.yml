@@ -22,7 +22,7 @@ genomes_hub:
         - genomes_log
 genomes:
     container_name: genomes
-    image: dictybase/modware-loader-export:devel
+    image: dictybase/modware-loader-export:1.6.2
     volumes_from:
         - genomes_hub
     environment:
