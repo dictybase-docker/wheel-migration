@@ -3,16 +3,19 @@ genomes_data:
     image: alpine
     volumes: 
         - /data
+    command: /bin/true
 genomes_config:
     container_name: genomes_config
     image: alpine
     volumes:
         - /config
+    command: /bin/true
 genomes_log:
     container_name: genomes_log
     image: alpine
     volumes:
         - /log
+    command: /bin/true
 genomes_hub:
     container_name: genomes_hub
     image: alpine
@@ -20,6 +23,7 @@ genomes_hub:
         - genomes_data
         - genomes_config
         - genomes_log
+    command: /bin/true
 genomes:
     container_name: genomes
     image: dictybase/modware-loader-export:1.6.2
