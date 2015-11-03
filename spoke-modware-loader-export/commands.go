@@ -124,9 +124,9 @@ func ExtraGFF3Action(c *cli.Context) {
 		go RunExportCmd(conf, k, errChan, out)
 	}
 	ao := []map[string]string{
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_EST"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_cDNA_clone"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_databank_entry", "match_type": "nucleotide_match"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "EST"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "cDNA_clone"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "databank_entry", "match_type": "nucleotide_match"},
 	}
 	for _, m := range ao {
 		m["config"] = MakeDictyConfigFile(c, m["feature_type"], "discoideum")
