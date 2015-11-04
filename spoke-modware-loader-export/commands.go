@@ -60,10 +60,10 @@ func CanonicalGFF3Action(c *cli.Context) {
 		if strings.Contains(k, "_") {
 			sn := strings.Split(k, "_")
 			subf = sn[0]
-			name = fmt.Sprintf("canonical_%s", sn[1])
+			name = fmt.Sprintf("%s_canonical_%s", sn[0], sn[1])
 		} else {
 			subf = k
-			name = "canonical_core"
+			name = fmt.Sprintf("%s_canonical_core", k)
 		}
 		conf := MakeCustomConfigFile(c, name, subf)
 		CreateFolderFromYaml(conf)
@@ -124,9 +124,9 @@ func ExtraGFF3Action(c *cli.Context) {
 		go RunExportCmd(conf, k, errChan, out)
 	}
 	ao := []map[string]string{
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_EST"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_cDNA_clone"},
-		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "canonical_databank_entry", "match_type": "nucleotide_match"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "EST"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "cDNA_clone"},
+		map[string]string{"organism": "dicty", "reference_type": "chromosome", "feature_type": "databank_entry", "match_type": "nucleotide_match"},
 	}
 	for _, m := range ao {
 		m["config"] = MakeDictyConfigFile(c, m["feature_type"], "discoideum")
@@ -256,7 +256,7 @@ func GeneAnnoAction(c *cli.Context) {
 	errChan := make(chan error)
 	out := make(chan []byte)
 	conf := make(map[string]string)
-	conf["config"] = MakeConfigFile(c, "genesummary")
+	conf["config"] = MakeGeneralConfigFile(c, "genesummary", "csv")
 	CreateFolderFromYaml(conf["config"])
 	for _, param := range []string{"legacy-user", "legacy-password", "legacy-dsn"} {
 		opt := ur.ReplaceAllString(param, "_")
@@ -266,13 +266,13 @@ func GeneAnnoAction(c *cli.Context) {
 
 	for _, param := range []string{"public", "private"} {
 		conf := make(map[string]string)
-		conf["config"] = MakeConfigFile(c, param)
+		conf["config"] = MakeGeneralConfigFile(c, param, "csv")
 		conf["note"] = param
 		go RunExportCmd(conf, "curatornotes", errChan, out)
 	}
 
 	conf2 := make(map[string]string)
-	conf2["conf"] = MakeConfigFile(c, "coll2gene")
+	conf2["conf"] = MakeGeneralConfigFile(c, "coll2gene", "csv")
 	go RunExportCmd(conf2, "colleague2gene", errChan, out)
 
 	count := 1
@@ -309,7 +309,7 @@ func RunExportCmd(opt map[string]string, subcmd string, errChan chan<- error, ou
 	log.Printf("going to run %s\n", cmdline)
 	b, err := exec.Command("modware-export", p...).CombinedOutput()
 	if err != nil {
-		errChan <- fmt.Errorf("Status %s message %s\n", err.Error(), string(b))
+		errChan <- fmt.Errorf("Status %s message %s for cmdline %s\n", err.Error(), string(b), cmdline)
 		return
 	}
 	out <- []byte(cmdline)

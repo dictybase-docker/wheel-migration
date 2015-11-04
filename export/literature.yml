@@ -1,0 +1,35 @@
+literature_data:
+    container_name: literature_data
+    image: alpine
+    volumes: 
+        - /data
+literature_config:
+    container_name: literature_config
+    image: alpine
+    volumes:
+        - /config
+literature_log:
+    container_name: literature_log
+    image: alpine
+    volumes:
+        - /log
+literature_hub:
+    container_name: literature_hub
+    image: alpine
+    volumes_from:
+        - literature_data
+        - literature_config
+        - literature_log
+literature:
+    container_name: literature
+    image: dictybase/modware-loader-export:1.6.2
+    volumes_from:
+        - literature_hub
+    environment:
+        - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
+        - ORACLE_USER=CGM_CHADO
+        - ORACLE_PASS=CGM_CHADO
+        - LEGACY_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
+        - LEGACY_USER=CGM_DDB
+        - LEGACY_PASS=CGM_DDB
+    command: app literature
