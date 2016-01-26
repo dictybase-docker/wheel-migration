@@ -41,3 +41,7 @@ All three variables are required.
 It's identical to the base image, read the documentation
 [here](https://hub.docker.com/r/dictybase/postgres/).
 
+## Deploy
+The container can be deployed using [kubernetes](http://kubernetes.io). A set of kubernetes manifests for both local
+and cloud deployments are present in the [kubernetes](kubernetes/) folder.
+
