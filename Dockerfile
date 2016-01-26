@@ -1,4 +1,4 @@
-FROM dictybase/postgres:9.3
+FROM dictybase/postgres:9.4
 MAINTAINER Siddhartha Basu<siddhartha-basu@northwestern.edu>
 RUN apt-get update \
     && apt-get -y install curl \
