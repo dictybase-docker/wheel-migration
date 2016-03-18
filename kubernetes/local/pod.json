@@ -70,8 +70,8 @@
                 "volumes": [
                     {
                         "name": "postgres-persistent-storage",
-                        "PersistentVolumeClaim": {
-                            "claimname": "postgres-claim1"
+                        "persistentVolumeClaim": {
+                            "claimName": "postgres-claim1"
                         }
                     }
                 ]
