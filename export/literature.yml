@@ -3,16 +3,19 @@ literature_data:
     image: alpine
     volumes: 
         - /data
+    command: /bin/true
 literature_config:
     container_name: literature_config
     image: alpine
     volumes:
         - /config
+    command: /bin/true
 literature_log:
     container_name: literature_log
     image: alpine
     volumes:
         - /log
+    command: /bin/true
 literature_hub:
     container_name: literature_hub
     image: alpine
@@ -20,16 +23,12 @@ literature_hub:
         - literature_data
         - literature_config
         - literature_log
+    command: /bin/true
 literature:
     container_name: literature
-    image: dictybase/modware-loader-export:1.6.2
+    image: dictybase/migration-data-export:1.8.1
     volumes_from:
         - literature_hub
-    environment:
-        - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
-        - ORACLE_USER=CGM_CHADO
-        - ORACLE_PASS=CGM_CHADO
-        - LEGACY_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
-        - LEGACY_USER=CGM_DDB
-        - LEGACY_PASS=CGM_DDB
+    env_file:
+        - ./literature.env
     command: app literature
