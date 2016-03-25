@@ -1,0 +1,60 @@
+{
+    "kind":"ReplicationController",
+    "apiVersion": "v1",
+    "metadata": {
+        "labels": {
+            "app": "pgweb",
+            "version": "0.9.1"
+        },
+        "name": "pgweb"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "app": "pgweb"
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "pgweb",
+                    "version": "0.9.1"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "postgres",
+                        "image": "sosedoff/pgweb:0.9.1",
+                        "command": ["/bin/bash", "-c"],
+                        "args": [ "pgweb --bind 0.0.0.0 --ssl disable --db $(CHADO_DB) --user $(CHADO_USER) --host $(POSTGRES_SERVICE_HOST) --pass $(PGPASSWORD)"],
+                        "ports": [
+                            {
+                                "containerPort": 8081,
+                                "name": "pgweb"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "CHADO_USER",
+                                "value": "chado"
+                            },
+                            {
+                                "name": "CHADO_DB",
+                                "value": "dictychado"
+                            },
+                            {
+                                "name": "PGPASSWORD",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "name": "db-credentials",
+                                        "key": "pgdump-pass"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
