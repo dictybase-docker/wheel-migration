@@ -1,3 +1,4 @@
-secrets.json
+example_secrets.json
 data/
 config/
+database-dump
