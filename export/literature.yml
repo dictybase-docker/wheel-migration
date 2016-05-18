@@ -26,7 +26,7 @@ literature_hub:
     command: /bin/true
 literature:
     container_name: literature
-    image: dictybase/migration-data-export:1.8.1
+    image: dictybase/migration-data-export
     volumes_from:
         - literature_hub
     env_file:

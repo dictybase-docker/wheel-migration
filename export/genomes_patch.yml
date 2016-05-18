@@ -56,7 +56,7 @@ purpureum_patch:
         "app",
         "clean-dbxref",
         "-o",
-        "/data/gff3/purpureum/canonical_core_clean.gff3",
+        "/data/gff3/purpureum/purpureum_canonical_core_clean.gff3",
         "-i",
         "/data/gff3/purpureum/purpureum_canonical_core.gff3",
         "-n",
