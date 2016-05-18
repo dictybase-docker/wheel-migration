@@ -35,9 +35,9 @@ purge-import: stop-data-import stop-dm stop-sqitch purge-pg
 	sleep 5
 	kubectl delete -f $(FOLDER)/etcd-cleanup/pod.json
 start-db-backup:
-	kubectl create -f $(PG_LOCAL_FOLDER)/dump.json
+	kubectl create -f $(PG_LOCAL_FOLDER)/backup.json
 purge-db-backup:
-	kubectl delete -f $(PG_LOCAL_FOLDER)/dump.json
+	kubectl delete -f $(PG_LOCAL_FOLDER)/backup.json
 start-db-restore:
 	sleep 3
 	kubectl create -f $(PG_LOCAL_FOLDER)/restore.json
