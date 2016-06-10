@@ -39,7 +39,7 @@ start-db-backup:
 purge-db-backup:
 	kubectl delete -f $(PG_LOCAL_FOLDER)/backup.json
 start-db-restore:
-	sleep 5
+	sleep 10
 	kubectl create -f $(PG_LOCAL_FOLDER)/restore.json
 purge-db-restore:
 	kubectl delete -f $(PG_LOCAL_FOLDER)/restore.json
