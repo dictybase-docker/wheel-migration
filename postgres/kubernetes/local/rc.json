@@ -22,7 +22,7 @@
                 "containers": [
                     {
                         "name": "postgres",
-                        "image": "dictybase/chado-postgres:9.4",
+                        "image": "dictybase/chado-postgres:9.4-ext1.0",
                         "volumeMounts": [
                             {
                                 "mountPath": "/var/lib/postgresql/data",
