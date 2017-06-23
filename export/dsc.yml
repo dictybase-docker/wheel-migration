@@ -26,7 +26,7 @@ dsc_hub:
     command: /bin/true
 dsc:
     container_name: dsc
-    image: dictybase/modware-loader-export:1.6.2
+    image: dictybase/migration-data-export
     volumes_from:
         - dsc_hub
     environment:
