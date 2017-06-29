@@ -1,40 +1,11 @@
-dsc_data:
-    container_name: dsc_data
-    image: alpine
-    volumes: 
-        - /data
-    command: /bin/true
-dsc_config:
-    container_name: dsc_config
-    image: alpine
-    volumes:
-        - /config
-    command: /bin/true
-dsc_log:
-    container_name: dsc_log
-    image: alpine
-    volumes:
-        - /log
-    command: /bin/true
-dsc_hub:
-    container_name: dsc_hub
-    image: alpine
-    volumes_from:
-        - dsc_data
-        - dsc_config
-        - dsc_log
-    command: /bin/true
-dsc:
-    container_name: dsc
-    image: dictybase/migration-data-export
-    volumes_from:
-        - dsc_hub
-    environment:
-        - ORACLE_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
-        - ORACLE_USER=CGM_CHADO
-        - ORACLE_PASS=CGM_CHADO
-        - LEGACY_DSN=dbi:Oracle:host=dicty-oracle-vm.nubic.northwestern.edu;port=1521;sid=orcl
-        - LEGACY_USER=CGM_DDB
-        - LEGACY_PASS=CGM_DDB
-        - EUTILS_EMAIL=siddhartha-basu@northwestern.edu
-    command: app stockcenter
+version: '3.2'
+services:
+    dsc:
+        image: dictybase/migration-data-export
+        volumes:
+            - data:/data
+            - config:/config
+            - log:/log
+        env_file:
+            - ./common.env
+        command: "app dsc-annotations && app dsc-users"

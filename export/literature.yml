@@ -30,5 +30,5 @@ literature:
     volumes_from:
         - literature_hub
     env_file:
-        - ./literature.env
+        - ./common.env
     command: app literature
