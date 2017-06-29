@@ -1,6 +1,7 @@
 version: '3.2'
 services:
-    dsc:
+    dsc-annotations:
+        container_name: dsc-annotations
         image: dictybase/migration-data-export
         volumes:
             - data:/data
@@ -8,4 +9,24 @@ services:
             - log:/log
         env_file:
             - ./common.env
-        command: "app dsc-annotations && app dsc-users"
+        command: ["app", "dsc-annotations"]
+    dsc-orders:
+        container_name: dsc-orders
+        image: dictybase/migration-data-export
+        volumes:
+            - data:/data
+        env_file:
+            - ./common.env
+        command: ["app", "--log-level", "info", "dsc-orders"]
+    dsc-users:
+        container_name: dsc-users
+        image: dictybase/migration-data-export
+        volumes:
+            - data:/data
+        env_file:
+            - ./common.env
+        command: ["app", "--log-level", "info", "dsc-users"]
+volumes:
+    data: {}
+    config: {}
+    log: {}
